@@ -1,0 +1,20 @@
+//___SERVIDOR FORK y CLUSTER CON NODEMON___//
+
+  nodemon src/server.js -m FORK -p 8081
+  nodemon src/server.js -m CLUSTER -p 8082
+
+//___SERVIDOR FORK y CLUSTER CON FOREVER___//
+
+  forever start -w src/server.js -m FORK -p 8081
+  forever start -w src/server.js -m CLUSTER -p 8082
+  forever list
+
+//___SERVIDOR FORK y CLUSTER CON PM2___//
+
+  pm2 start src/server.js --name="Server1" --watch -- 8081
+  pm2 start src/server.js --name="Server2" --watch -i max -- 8082
+
+//___SERVIDOR NGINX___//
+
+  nodemon src/server.js -m FORK -p 8081
+  nodemon src/server.js -m CLUSTER -p 8082 -a 1 ### crea un cluster en los puertos 8082 al 8085

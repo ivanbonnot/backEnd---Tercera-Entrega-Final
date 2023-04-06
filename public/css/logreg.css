@@ -1,0 +1,43 @@
+
+.jumbotron {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.jumbotron h1 {
+    margin: 0px;
+}
+
+.jumbotron form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.jumbotron form div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+}
+
+.jumbotron form div .password {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.jumbotron form div input {
+    margin: 2px;
+}
+
+.jumbotron form div p {
+    margin: 0px;
+    padding: 4px 0px 0px 0px;
+}
+
+.jumbotron button {
+    margin: 25px 0px 0px 0px;
+}

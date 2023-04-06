@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+        integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="//res.cloudinary.com/hdsqazxtw/image/upload/v1558445734/favicon-32x32_fy92aq.png">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="
+https://cdn.jsdelivr.net/npm/normalizr@3.6.2/dist/normalizr.browser.min.js
+"></script>
+    <title>Home</title>
+</head>
+
+<body>
+    <div id="welcome" class="jumbotron">
+        <h2> Bienvenido <%=email%>
+        </h2>
+        <form action="/logout" method="get" autocomplete="off">
+            <button class="btn btn-success mt-3">Logout</button>
+        </form>`
+    </div>
+
+    <div class="container jumbotron">
+        <div>
+            <form id="agregarProducto" action="/api/productos" method="POST">
+                <h2>Ingresar nuevo producto</h2>
+                <div class="border">
+                    <p>Nombre: <input type="text" name="title"></p>
+                    <p>Precio: <input type="text" name="price"></p>
+                    <p>Url image: <input type="text" name="thumbnail"></p>
+                </div>
+                <div class="border">
+                    <p>Descripción: <input type="text" name="description"></p>
+                </div>
+                <button id="enviar" class="btn">Enviar</button>
+            </form>
+        </div>
+
+        <div id="productos"></div>
+
+        <div>
+            <form action="/api/carrito" method="GET">
+                <button id="carrito" class="btn">Carrito</button>
+            </form>
+        </div>
+
+        <div id="" class="row d-flex justify-content-center">
+            <form action="/api/carrito" method="POST">
+                <div class="col">
+                    <button id="newCartBtn" type="" class="btn btn-primary">Nuevo carrito</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="" class="row d-flex justify-content-center">
+                <div class="col">
+                    <input type="text" class="form-control" id="idProdNew" aria-describedby="pHelp3">
+                    <div id="pHelp3" class="form-text">ID producto a agregar</div>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" id="idProdCartNew" aria-describedby="pHelp4">
+                    <div id="pHelp4" class="form-text">ID del carrito</div>
+                </div>
+                <div class="col">
+                    <button id="newItemCartBtn" type="" class="btn btn-primary">Agregar producto</button>
+                </div>
+        </div>
+
+
+        <div id="" class="row d-flex justify-content-center">
+                <div class="col">
+                    <input type="text" class="form-control" id="idCartList" aria-describedby="pHelp4">
+                    <div id="pHelp4" class="form-text">ID del carrito</div>
+                </div>
+                <div class="col">
+                    <button id="listItemCartBtn" type="" class="btn btn-primary">Ver productos del carrito</button>
+                </div>
+        </div>
+        <div id="itemCartList" class="row"></div>
+
+
+        <div id="" class="row d-flex justify-content-center ">
+            <form action="/api/carrito/:id" method="DELETE">
+                <div class="col">
+                    <input type="text" class="form-control" id="idCartDel" aria-describedby="pHelp">
+                    <div id="pHelp" class="form-text">ID de carrito a borrar</div>
+                </div>
+                <div class="col">
+                    <button id="deleteCartBtn" type="" class="btn btn-primary">Borrar carrito</button>
+                </div>
+            </form>
+        </div>
+
+        <br>
+
+        <div id="" class="row d-flex justify-content-center ">
+                <div class="col">
+                    <input type="text" class="form-control" id="idProdDel" aria-describedby="pHelp1">
+                    <div id="pHelp1" class="form-text">ID producto a borrar</div>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" id="idProdCartDel" aria-describedby="pHelp2">
+                    <div id="pHelp2" class="form-text">ID del carrito</div>
+                </div>
+                <div class="col">
+                    <button id="deleteItemCartBtn" type="" class="btn btn-primary">Borrar producto</button>
+                </div>
+        </div>
+
+
+        <div id="" class="row d-flex justify-content-center">
+            <form action="/api/carrito/confirm" method="GET">
+                <div class="col">
+                    <button id="" type="" class="btn btn-primary">Confirmar compra</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="chat">
+            <h1>Chat</h1>
+
+            <input type="text" id="inputEmail" class="form-control w-75 my-2 mr-2" placeholder="Ingresá tu email"
+                name="email">
+            <input type="text" id="inputName" class="form-control w-75 my-2 mr-2" placeholder="Ingresá tu nombre"
+                name="name">
+            <input type="text" id="inputLastName" class="form-control w-75 my-2 mr-2" placeholder="Ingresá tu apellidu"
+                name="lastname">
+            <input type="text" id="inputAge" class="form-control w-75 my-2 mr-2" placeholder="Ingresá tu edad"
+                name="age">
+            <input type="text" id="inputAlias" class="form-control w-75 my-2 mr-2" placeholder="Ingresá tu alias"
+                name="nickname">
+            <input type="text" id="inputAvatar" class="form-control w-75 my-2 mr-2" placeholder="Ingresá tu avatar"
+                name="avatar">
+
+
+            <form id="formPublicarMensaje" class="form-inline" autocomplete="off">
+                <div class="form-group">
+                    <input id="inputMensaje" type="text" class="form-control my-2 mr-2" placeholder="Ingresá tu mensaje"
+                        name="text">
+                    <button id="btnEnviar" type="submit" class="btn btn-primary my-2">Enviar</button>
+                </div>
+            </form>
+
+            <div id="mensajes"></div>
+        </div>
+    </div>
+
+    <script src="./js/index.js"></script>
+</body>
+
+</html>

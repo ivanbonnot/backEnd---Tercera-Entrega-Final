@@ -1,0 +1,2 @@
+[2023-04-05T23:58:16.937] [ERROR] default - El método y la ruta son: POST /642e34fd04f19e234f8bf3c7/productos/642cc6bb0214116cbf7ca8f0. Carrito o producto no encontrado.
+[2023-04-06T00:10:49.363] [ERROR] default - El método y la ruta son: DELETE /642e357904f19e234f8bf3d0/productos/642cc6bb0214116cbf7ca8f0. Intento de acceso sin loggueo.
