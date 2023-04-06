@@ -1,4 +1,4 @@
-const { verifyToken } = require("../config/tokenHandler");
+const { verifyToken } = require("../config/tokenhandler");
 const path = require('path')
 
 const auth = (req, res, next) => {

@@ -114,6 +114,7 @@ const idProdCartDel = document.getElementById("idProdCartDel")
 
 
 //-- Agregar producto en carrito
+/*
 document.getElementById("newItemCartBtn").addEventListener("click", ev => {
   fetch(`http://localhost:8080/api/carrito/${idProdCartNew.value}/productos/${idProdNew.value}`, {
     method: 'POST'
@@ -124,6 +125,7 @@ document.getElementById("newItemCartBtn").addEventListener("click", ev => {
       idProdNew.value = ''
     })
 })
+*/
 
 //-- Listar productos del carrito
 document.getElementById("listItemCartBtn").addEventListener("click", ev => {

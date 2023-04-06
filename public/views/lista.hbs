@@ -31,8 +31,7 @@
                 <td>{{this.title}}</td>
                 <td>${{this.price}}</td>
                 <td><img width="50" src={{this.thumbnail}} alt="not found"></td>
-                <td>Id: {{this._id}}</td>
-                <td><button>Agregar al carrito</button></td>
+                <td><form action='/api/carrito/id/productos/{{this._id}}' method="POST"><button>Agregar al carrito</button></form></td>
             </tr>
             {{/each}}
         </table>

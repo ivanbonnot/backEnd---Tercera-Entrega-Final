@@ -29,7 +29,7 @@ const baseProcces = () => {
     const authWebRouter = require('../src/routes/web/auth')
     const homeWebRouter = require('../src/routes/web/home')
 
-    const connectToDb = require("./config/connectToDb");
+    const connectToDb = require("./config/connectToDB");
 
     const app = express();
 

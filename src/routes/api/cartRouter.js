@@ -21,7 +21,18 @@ cartRouter.get("/", async (req, res) => {
       return;
     }
 
-    res.json(user);
+    const cart = await dbController.getCartById(user.cartId);
+    
+    for (const productCart of cart.productos) {
+      const product = await dbController.getProductById(productCart.id);
+
+      messageToSend += `
+      - nombre: ${product.title}, precio: ${product.price}`;
+
+      html += `
+      <h2>- nombre: ${product.title}, precio: ${product.price}</h2>`;
+    }
+
   } else {
     logger.error(`Ruta: ${url}, metodo: ${method}. Sesión no iniciada`)
     res.status(403).json({ result: "error" });
@@ -73,14 +84,15 @@ cartRouter.post("/", async (req, res) => {
 });
 
 
-cartRouter.post("/:id/productos/:id_prod", async (req, res) => {
+cartRouter.post("/id/productos/:id_prod", async (req, res) => {
   const { url, method } = req;
-  const id = req.query.id
-  console.log(id)
-  if (req.session.email) {
-    const { id, id_prod } = req.params;
 
-    const cart = await dbController.getCartById(id);
+  const email = req.session.email
+  if (email) {
+    const user = await dbController.getUser(email)
+    const { id_prod } = req.params;
+
+    const cart = await dbController.getCartById(user.cartId);
     const product = await dbController.getProductById(id_prod);
 
     if (!cart || !product) {
@@ -89,10 +101,10 @@ cartRouter.post("/:id/productos/:id_prod", async (req, res) => {
       return;
     }
 
-    await dbController.addProductInCart(id, id_prod);
+    await dbController.addProductInCart(user.cartId, id_prod);
 
     logger.info(`El método y la ruta son: ${method} ${url}.`);
-    res.json(id);
+    res.json(user.cartId);
     return;
   }
 
