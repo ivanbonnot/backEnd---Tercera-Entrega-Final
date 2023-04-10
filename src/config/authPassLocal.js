@@ -4,8 +4,8 @@ const { hashSync, compareSync } = require('bcrypt');
 const dbController = require("../controllers/controllerMongoDB");
 
 const users = [];
-// const usersMongoDB = [];
-let userMongo = {};
+let userMongo = [];
+// let userMongoDB = []
 
 passport.serializeUser(function (user, done) {
   done(null, user.email);
@@ -18,19 +18,28 @@ passport.deserializeUser(function (email, done) {
 
 passport.use('login', new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
   const user = users.find(user => user.email === email && compareSync(password, user.password));
-  // const usersDB= await dbController.getUser(email)
-  // usersMongoDB.push(usersDB);
-  // console.log(usersDB)
+  const usersDB = await dbController.getUser(email)
 
-  // if (usersDB) {
-  //   userMongo = usersMongoDB.find(user => user.email === email && compareSync(password, user.password));
-  // }
+  if (usersDB) {
+    let userMongoDB = []
+    userMongoDB.push(usersDB)
+    userMongo = userMongoDB.find(user => user.email === email && compareSync(password, user.password));
 
-  if (user || userMongo) {
-    done(null, user);
-    return;
   }
-  done(null, false, { message: 'Nombre de usuario o contraseña incorrectos' });
+
+  if (user) {
+    done(null, user);
+
+  } else if (userMongo?.email) {
+    done(null, userMongo);
+
+  } else {
+    done(null, false, { message: 'Nombre de usuario o contraseña incorrectos' });
+
+  }
+
+
+
 }));
 
 passport.use('register', new LocalStrategy({ passReqToCallback: true },

@@ -129,18 +129,27 @@ document.getElementById("newItemCartBtn").addEventListener("click", ev => {
 
 //-- Listar productos del carrito
 document.getElementById("listItemCartBtn").addEventListener("click", ev => {
-  fetch(`http://localhost:8080/api/carrito/${idCartList.value}/productos/`, {
+  fetch(`http://localhost:8080/api/carrito/`, {
     method: 'GET'
   })
     .then((response) => response.json())
     .then((data) => {
-      makeHtmlTable(data).then(html => {
-        console.log(data)
+      makeHtmlTableForCart(data).then(html => {
         document.getElementById('itemCartList').innerHTML = html
       })
       idCartList.value = ''
     })
 })
+
+function makeHtmlTableForCart(productos) {
+  return fetch("./views/listaCart.hbs")
+      .then((respuesta) => respuesta.text())
+      .then((plantilla) => {
+          const template = Handlebars.compile(plantilla);
+          const html = template({ productos });
+          return html;
+      });
+}
 
 //-- Borrar carrito
 document.getElementById("deleteCartBtn").addEventListener("click", ev => {

@@ -22,16 +22,14 @@ cartRouter.get("/", async (req, res) => {
     }
 
     const cart = await dbController.getCartById(user.cartId);
-    
+    let productsInCart = []
+
     for (const productCart of cart.productos) {
-      const product = await dbController.getProductById(productCart.id);
-
-      messageToSend += `
-      - nombre: ${product.title}, precio: ${product.price}`;
-
-      html += `
-      <h2>- nombre: ${product.title}, precio: ${product.price}</h2>`;
+      const producto = await dbController.getProductById(productCart.id);
+      productsInCart.push(producto)
     }
+    console.log(productsInCart)
+    res.json(productsInCart)
 
   } else {
     logger.error(`Ruta: ${url}, metodo: ${method}. Sesión no iniciada`)
