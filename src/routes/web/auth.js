@@ -52,19 +52,6 @@ authWebRouter.post('/register', passport.authenticate('register', { failureRedir
     req.session.username = req.user.username;
     const { username, email, password, address, phone, avatar } = req.body;
 
-    const cartAdd = new Cart();
-    const cart = await dbController.saveCart(cartAdd);
-
-    const newUser = {
-        username,
-        password,
-        email,
-        address,
-        phone,
-        avatar,
-        cartId: cart._id,
-    }
-
     const user = await dbController.getUser(email)
     console.log("61", user)
 
@@ -81,6 +68,19 @@ authWebRouter.post('/register', passport.authenticate('register', { failureRedir
          `;
 
         sendEmail(email, username, html)
+
+        const cartAdd = new Cart();
+        const cart = await dbController.saveCart(cartAdd);
+
+        const newUser = {
+            username,
+            password,
+            email,
+            address,
+            phone,
+            avatar,
+            cartId: cart._id,
+        }
         dbController.saveUser(newUser);
     }
 
